@@ -1,6 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qsl, urlparse
 
+routes = {
+    '/proyecto/web-uno': lambda params: f'<h1>Proyecto: web-uno Autor: {params.get("Abraham")}</h1>'
+}
 
 class WebRequestHandler(BaseHTTPRequestHandler):
     def url(self):
@@ -31,6 +34,17 @@ class WebRequestHandler(BaseHTTPRequestHandler):
             <li> Date: {self.headers.get('Date')} </li>
         </ul>
     """
+        
+        def get_response(self):
+
+            path = self.url().path
+            params = self.query_data()
+            response_function = routes.get(path)
+        if response_function:
+            return response_function(params)
+        else:
+            return "<h1>Ruta no encontrada</h1>"
+
 
 if __name__ == "__main__":
  # Especificamos el puerto
