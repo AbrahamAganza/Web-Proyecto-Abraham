@@ -26,6 +26,11 @@ class WebRequestHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print("Starting server")
-    server = HTTPServer(("localhost", 8080), WebRequestHandler)
-    server.serve_forever()
+ # Especificamos el puerto
+    port = 8000
+    server_address = ('localhost', port)
+
+    # Creamos el servidor y lo iniciamos
+    httpd = HTTPServer(server_address, WebRequestHandler)
+    print(f"Servidor iniciado en http://localhost:{port}")
+    httpd.serve_forever()
