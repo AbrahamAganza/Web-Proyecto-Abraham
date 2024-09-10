@@ -13,10 +13,18 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         return dict(parse_qsl(self.url().query))
 
     def do_GET(self):
+        if self.path == '/':
+            try:
+                with open('home.html', 'r') as f:
+                    content = f.read()
+            except FileNotFoundError:
+                content = "<h1>Archivo home.html no encontrado</h1>"
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
         self.wfile.write(self.get_response().encode("utf-8"))
+         else:
+            self.send_error(404,"Página no encontrada")
 
     def get_response(self):
         return f"""
