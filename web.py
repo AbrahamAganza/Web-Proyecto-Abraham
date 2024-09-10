@@ -13,12 +13,6 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         return dict(parse_qsl(self.url().query))
 
     def do_GET(self):
-        if self.path == '/':
-            try:
-                with open('home.html', 'r') as f:
-                    content = f.read()
-            except FileNotFoundError:
-                content = "<h1>Archivo home.html no encontrado</h1>"
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
@@ -26,6 +20,18 @@ class WebRequestHandler(BaseHTTPRequestHandler):
           
 
     def get_response(self):
+        path = self.url().path
+        params = self.query_data()
+        response_function = routes.get(path)
+
+        if path == '/':
+            with open('home.html', 'r') as f:
+                return f.read()
+
+        if response_function:
+            return response_function(params)
+        else:
+            return "<h1>Ruta no encontrada</h1>"
         return f"""
         <h1> Hola Web </h1>  
         <p> From Request: </p>
