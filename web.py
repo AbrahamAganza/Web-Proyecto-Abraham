@@ -23,8 +23,7 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html")
         self.end_headers()
         self.wfile.write(self.get_response().encode("utf-8"))
-         else:
-            self.send_error(404,"Página no encontrada")
+          
 
     def get_response(self):
         return f"""
