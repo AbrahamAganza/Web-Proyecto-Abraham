@@ -17,13 +17,20 @@ class WebRequestHandler(BaseHTTPRequestHandler):
 
     def get_response(self):
         return f"""
-    <h1> Hola Web </h1>
-    <p> URL Parse Result : {self.url()}         </p>
-    <p> Path Original: {self.path}         </p>
-    <p> Headers: {self.headers}      </p>
-    <p> Query: {self.query_data()}   </p>
-"""
-
+        <h1> Hola Web </h1>  
+        <p> From Request: </p>
+        <ul>
+            <li> Host: {self.headers.get('Host')} </li>
+            <li> User-Agent: {self.headers.get('User-Agent')} </li>
+            <li> Requested Path: {self.path} </li>
+        </ul>
+            <p> From Response: </p>
+        <ul>
+            <li> Content-Type: {self.headers.get('Content-Type')} </li>
+            <li> Server: {self.headers.get('Server')} </li>
+            <li> Date: {self.headers.get('Date')} </li>
+        </ul>
+    """
 
 if __name__ == "__main__":
  # Especificamos el puerto
